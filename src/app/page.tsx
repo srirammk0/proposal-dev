@@ -1,152 +1,161 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, FileSignature, Fingerprint, Award, Check, BookOpen, Quote } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Copy, Check, Briefcase, FileSignature, Chrome, PenTool, LayoutTemplate, Layers } from "lucide-react";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(email) setSubmitted(true);
   };
 
+  const copyPrompt = () => {
+    navigator.clipboard.writeText("You are an expert Upwork freelancer...");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 40 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-100px" },
-    transition: { duration: 0.8 }
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
   };
 
   return (
-    <main className="min-h-screen bg-[#faf8f5] text-slate-900 font-sans selection:bg-orange-200 overflow-x-hidden">
+    <main className="min-h-screen bg-[#fdfdfc] text-[#1a1a19] font-sans selection:bg-[#e4e4e0] overflow-x-hidden">
       
-      {/* Navbar */}
-      <nav className="w-full flex justify-between items-center p-8 max-w-6xl mx-auto border-b border-orange-900/10">
-        <div className="flex items-center gap-2 font-serif font-black text-2xl tracking-tighter text-orange-950">
-          <FileSignature className="w-6 h-6 text-orange-600" />
+      {/* Navbar Minimalist */}
+      <nav className="w-full flex justify-between items-center px-8 py-6 max-w-[1400px] mx-auto">
+        <div className="flex items-center gap-3 font-serif font-semibold text-xl tracking-tight text-[#1a1a19]">
+          <div className="w-8 h-8 rounded-full border border-[#1a1a19] flex items-center justify-center">
+            <div className="w-3 h-3 bg-[#ea580c] rounded-full" />
+          </div>
           Proposal.dev
         </div>
-        <button className="px-6 py-2 rounded-full border border-orange-900/20 text-orange-950 text-sm font-medium hover:bg-orange-50 transition-colors">
-          Sign In
+        <button className="text-sm font-medium hover:text-[#ea580c] transition-colors relative group">
+          Member Login
+          <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#ea580c] transition-all group-hover:w-full" />
         </button>
       </nav>
 
-      {/* Elegant Hero Section */}
-      <section className="flex flex-col items-center justify-center pt-32 pb-40 px-6 text-center max-w-4xl mx-auto relative z-10">
-        <motion.div {...fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-xs mb-8 text-orange-800 font-medium tracking-wide uppercase">
-          <Award className="w-3.5 h-3.5" />
-          <span>For Top-Rated Freelancers</span>
-        </motion.div>
-        
-        <motion.h1 {...fadeInUp} className="text-6xl md:text-8xl font-serif font-black tracking-tighter mb-8 text-orange-950 leading-[1.1]">
-          Never write a robotic cover letter again.
-        </motion.h1>
-        
-        <motion.p {...fadeInUp} className="text-xl text-slate-600 mb-12 max-w-2xl leading-relaxed font-light">
-          Clients instantly reject ChatGPT templates. We built the first Upwork proposal engine that trains on your past successful bids to perfectly mimic your human tone, spelling quirks, and personal style.
-        </motion.p>
-
-        <motion.div {...fadeInUp} className="w-full max-w-md relative z-20">
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row w-full gap-3 bg-white p-2 rounded-2xl shadow-xl shadow-orange-900/5 ring-1 ring-orange-900/10">
-              <input 
-                type="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address" 
-                className="w-full bg-transparent px-5 py-4 text-orange-950 placeholder:text-slate-400 focus:outline-none transition-all"
-                required
-              />
-              <button type="submit" className="shrink-0 inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-orange-600 text-white font-medium hover:bg-orange-700 transition-colors shadow-lg shadow-orange-600/30">
-                Join Beta <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
-          ) : (
-            <div className="flex items-center gap-3 px-6 py-4 bg-emerald-50 text-emerald-700 rounded-2xl justify-center font-medium ring-1 ring-emerald-200 shadow-xl shadow-emerald-900/5">
-              <Check className="w-5 h-5" />
-              <span>You&apos;re on the list. We&apos;ll be in touch.</span>
-            </div>
-          )}
-        </motion.div>
-
-        {/* Floating Document Mockup */}
-        <motion.div initial={{ opacity: 0, y: 100, rotate: -2 }} animate={{ opacity: 1, y: 0, rotate: 2 }} transition={{ duration: 1, delay: 0.3 }} className="absolute -z-10 top-[60%] w-full max-w-3xl left-1/2 -translate-x-1/2 pointer-events-none">
-          <div className="bg-white p-10 rounded-3xl shadow-[0_40px_100px_-20px_rgba(234,88,12,0.15)] ring-1 ring-orange-900/5 text-left rotate-2 transform-gpu">
-            <h4 className="font-serif font-bold text-2xl text-orange-950 mb-6 border-b border-orange-100 pb-4">Re: Looking for Senior React Developer</h4>
-            <div className="space-y-4 font-serif text-slate-500 text-lg leading-relaxed">
-              <p>Hi Michael,</p>
-              <p>Unlike the 50 other AI proposals you just read, I actually looked at your architecture diagram. You don't need a massive Redux refactor right now, you just need to decouple the cart state from your deeply nested components.</p>
-              <p className="blur-[4px] select-none">I solved this exact problem for an e-commerce client last year using Zustand. We dropped their bundle size by 30% and improved TTI by 2 seconds.</p>
-              <p className="blur-[4px] select-none">Let's hop on a quick call tomorrow to discuss how we can implement this without breaking your current sprint cycle.</p>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Spacer for floating mockup */}
-      <div className="h-64 md:h-96 w-full bg-gradient-to-b from-transparent to-white" />
-
-      {/* Alternating Features Section */}
-      <section className="w-full py-32 bg-white">
-        <div className="max-w-6xl mx-auto px-6 space-y-32">
+      {/* Hero Section Editorial */}
+      <section className="pt-32 pb-24 px-8 max-w-[1400px] mx-auto">
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
           
-          <div className="flex flex-col md:flex-row gap-16 items-center">
-            <motion.div {...fadeInUp} className="flex-1 space-y-6">
-              <div className="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center mb-8">
-                <Fingerprint className="w-6 h-6 text-orange-600" />
-              </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-orange-950 leading-tight">Your Voice. Perfected.</h2>
-              <p className="text-xl text-slate-600 leading-relaxed font-light">Upload 3 of your past winning proposals. Our Few-Shot Gemini engine analyzes your vocabulary, formatting habits, and unique sales angles to create a profile that sounds exactly like you.</p>
+          <div className="lg:col-span-7">
+            <motion.div {...fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#e4e4e0] text-xs mb-8 text-[#5c5c58] font-medium tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ea580c] animate-pulse" />
+              Private Beta
             </motion.div>
-            <motion.div {...fadeInUp} className="flex-1 w-full aspect-square bg-orange-50 rounded-3xl border border-orange-100 relative overflow-hidden flex items-center justify-center">
-               <div className="w-64 h-64 border-[0.5px] border-orange-300 rounded-full flex items-center justify-center animate-[spin_60s_linear_infinite]">
-                 <div className="w-48 h-48 border-[0.5px] border-orange-400 rounded-full flex items-center justify-center animate-[spin_40s_linear_infinite_reverse]">
-                   <div className="w-32 h-32 bg-orange-200/50 rounded-full backdrop-blur-3xl" />
-                 </div>
-               </div>
+            
+            <motion.h1 {...fadeInUp} className="text-6xl md:text-[6rem] font-serif font-normal tracking-tight mb-8 text-[#1a1a19] leading-[0.95]">
+              Stop sounding <br/>
+              <span className="italic text-[#ea580c]">like a machine.</span>
+            </motion.h1>
+            
+            <motion.p {...fadeInUp} className="text-xl text-[#5c5c58] mb-12 max-w-xl leading-relaxed font-light">
+              Clients are rejecting ChatGPT templates. Proposal.dev is an editorial-grade AI engine that learns your unique writing style to generate Upwork proposals that actually get interviews.
+            </motion.p>
+
+            <motion.div {...fadeInUp} className="w-full max-w-lg">
+              {!submitted ? (
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row w-full gap-4">
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter email address" 
+                    className="flex-1 bg-transparent border-b border-[#1a1a19]/20 px-4 py-4 text-[#1a1a19] placeholder:text-[#1a1a19]/40 focus:outline-none focus:border-[#ea580c] transition-all text-lg"
+                    required
+                  />
+                  <button type="submit" className="shrink-0 inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#1a1a19] text-[#fdfdfc] font-medium hover:bg-[#ea580c] transition-colors rounded-none">
+                    Request Access <ArrowUpRight className="w-5 h-5" />
+                  </button>
+                </form>
+              ) : (
+                <div className="flex items-center gap-3 px-6 py-4 border border-[#1a1a19]/10 bg-[#fdfdfc] text-[#1a1a19] font-medium">
+                  <Check className="w-5 h-5 text-[#ea580c]" />
+                  <span>Access requested. We will review your portfolio.</span>
+                </div>
+              )}
             </motion.div>
           </div>
 
-          <div className="flex flex-col md:flex-row-reverse gap-16 items-center">
-            <motion.div {...fadeInUp} className="flex-1 space-y-6">
-              <div className="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center mb-8">
-                <BookOpen className="w-6 h-6 text-orange-600" />
+          <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }} className="lg:col-span-5 relative">
+            <div className="bg-[#fdfdfc] border border-[#e4e4e0] p-8 shadow-2xl relative z-10 before:absolute before:inset-0 before:bg-[url('https://grainy-gradients.vercel.app/noise.svg')] before:opacity-20 before:mix-blend-overlay">
+              <div className="flex justify-between items-start mb-12">
+                <div className="space-y-1">
+                  <h4 className="font-serif font-bold text-2xl text-[#1a1a19]">The "Anti-AI" Prompt</h4>
+                  <p className="text-xs text-[#5c5c58] uppercase tracking-widest font-mono">Behind the scenes</p>
+                </div>
+                <button onClick={copyPrompt} className="text-[#5c5c58] hover:text-[#ea580c] transition-colors">
+                  {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+                </button>
               </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-orange-950 leading-tight">Auto-Portfolio Matching</h2>
-              <p className="text-xl text-slate-600 leading-relaxed font-light">Connect your GitHub or Dribbble. When you paste a job link, Proposal.dev instantly cross-references the client's requirements and automatically injects the two most relevant portfolio links into your pitch.</p>
-            </motion.div>
-            <motion.div {...fadeInUp} className="flex-1 w-full p-8 bg-orange-950 rounded-3xl shadow-2xl relative overflow-hidden">
-               <div className="space-y-4">
-                 <div className="h-4 w-3/4 bg-orange-900/50 rounded-full" />
-                 <div className="h-4 w-1/2 bg-orange-900/50 rounded-full" />
-                 <div className="p-4 rounded-xl bg-orange-900/30 border border-orange-800/50 mt-8">
-                   <p className="text-orange-300 font-medium mb-2">Relevant Experience Found:</p>
-                   <p className="text-orange-100/60 text-sm">github.com/your-username/ecommerce-dashboard</p>
-                 </div>
-               </div>
-            </motion.div>
-          </div>
-
+              <div className="font-mono text-[13px] leading-relaxed text-[#5c5c58] space-y-4">
+                <p>{"{"}</p>
+                <p className="pl-4">"role": "system",</p>
+                <p className="pl-4">"content": "Analyze the following 3 past successful proposals. Extract the user's exact vocabulary level, paragraph spacing, and sign-off habits. DO NOT use the words 'delve', 'moreover', or 'tapestry'."</p>
+                <p>{"}"}</p>
+                <div className="h-px w-full bg-[#e4e4e0] my-6" />
+                <p className="text-[#ea580c]">{"// Tone Match: 99.8%"}</p>
+                <p className="text-[#1a1a19]">{"// AI Detection Score: 0%"}</p>
+              </div>
+            </div>
+            {/* Decorative Element */}
+            <div className="absolute -top-6 -right-6 w-32 h-32 border border-[#ea580c]/20 rounded-full -z-10" />
+            <div className="absolute -bottom-12 -left-12 w-48 h-48 border border-[#1a1a19]/5 rounded-full -z-10" />
+          </motion.div>
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="w-full py-32 bg-orange-950 text-white text-center">
-        <div className="max-w-3xl mx-auto px-6">
-          <Quote className="w-12 h-12 text-orange-500/30 mx-auto mb-8" />
-          <h2 className="text-5xl font-serif font-bold mb-8 leading-tight">Stop wasting your Connects.</h2>
-          <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="px-10 py-5 rounded-xl bg-orange-500 text-white font-medium hover:bg-orange-400 transition-colors shadow-2xl shadow-orange-500/20 text-lg">
-            Request Early Access
-          </button>
+      {/* Grid Features */}
+      <section className="py-32 border-t border-[#e4e4e0] bg-[#f9f8f6]">
+        <div className="max-w-[1400px] mx-auto px-8">
+          <motion.h2 {...fadeInUp} className="text-4xl md:text-5xl font-serif mb-16 max-w-2xl text-[#1a1a19]">
+            The architecture of a winning bid.
+          </motion.h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: FileSignature, title: "Few-Shot Training", desc: "We feed Gemini your actual past proposals to clone your exact writing style." },
+              { icon: Chrome, title: "In-Browser Extension", desc: "Draft and submit proposals directly inside the Upwork UI without switching tabs." },
+              { icon: Briefcase, title: "Portfolio Context", desc: "We automatically cross-reference your GitHub to inject relevant past projects." },
+              { icon: LayoutTemplate, title: "A/B Testing", desc: "Generate 3 variations per job and track which angles convert best." }
+            ].map((feature, i) => (
+              <motion.div key={i} {...fadeInUp} transition={{ delay: i * 0.1 }} className="flex flex-col border-t border-[#e4e4e0] pt-8">
+                <feature.icon className="w-6 h-6 text-[#ea580c] mb-6" />
+                <h4 className="text-lg font-medium text-[#1a1a19] mb-3">{feature.title}</h4>
+                <p className="text-[#5c5c58] text-sm leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Big CTA */}
+      <section className="w-full py-40 bg-[#1a1a19] text-[#fdfdfc] text-center px-8 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.h2 {...fadeInUp} className="text-5xl md:text-7xl font-serif font-light mb-12 leading-tight">
+            Elevate your freelance<br/>win rate today.
+          </motion.h2>
+          <motion.button {...fadeInUp} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="px-10 py-5 bg-[#fdfdfc] text-[#1a1a19] font-medium hover:bg-[#ea580c] hover:text-[#fdfdfc] transition-colors text-lg inline-flex items-center gap-2">
+            Request Invite <ArrowUpRight className="w-5 h-5" />
+          </motion.button>
         </div>
       </section>
       
-      {/* Footer Mini */}
-      <footer className="w-full py-12 text-center text-sm font-medium text-slate-500 bg-white">
-        <p>© 2026 Proposal.dev. Built with OpenClaw.</p>
+      {/* Footer Minimal */}
+      <footer className="w-full py-12 px-8 flex justify-between items-center text-xs font-mono text-[#5c5c58] max-w-[1400px] mx-auto uppercase tracking-widest">
+        <p>© 2026 Proposal.dev</p>
+        <p>Built for the top 1%</p>
       </footer>
     </main>
   );
